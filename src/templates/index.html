@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+  </head>
+  <body>
+    <div id="video-list"></div>
+
+    <script>
+      $(document).ready(function () {
+        // lee el archivo CSV
+        $.ajax({
+          type: "GET",
+          url: "src/canvas.csv",
+          dataType: "text",
+          success: function (data) {
+            // parse el contenido del archivo CSV
+            const result = Papa.parse(data, {
+              header: true,
+              dynamicTyping: true,
+            });
+
+            // para cada fila del archivo CSV
+            result.data.forEach((row) => {
+              // obtiene la URL del video y el nombre
+              const url = row.url_video;
+              const name = row.nombre_video;
+
+              // agrega un elemento de video a la lista
+              $("#video-list").append(`
+                <p>
+                  <a href="${url}" target="_blank">${name}</a>
+                </p>
+              `);
+            });
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
