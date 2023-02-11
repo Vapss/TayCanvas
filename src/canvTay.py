@@ -78,3 +78,8 @@ def credenciales():
 
     canvas_df.to_csv('canvas.csv', index=False)
     canvas_df.to_html('./templates/canvas.html', index=False)
+    
+    # Regresar la lista de url y nombres en la respuesta de la API
+    
+    return canvas_df.to_dict('records')
+    
