@@ -5,9 +5,6 @@ import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import json
 import requests
 
@@ -34,9 +31,15 @@ def credenciales():
 
     for album_id in album_ids:
         album = spotify.album(album_id)
-        for track in album['tracks']['items']:
-            songs.append([track['name'], album['name'], track['external_urls']['spotify'], track['id']])
-
+        songs.extend(
+            [
+                track['name'],
+                album['name'],
+                track['external_urls']['spotify'],
+                track['id'],
+            ]
+            for track in album['tracks']['items']
+        )
     # Convertir a dataframe
     songs_df = pd.DataFrame(songs, columns=['song_name', 'album_name', 'url', 'track_id'])
 
@@ -45,19 +48,20 @@ def credenciales():
     canvas = []
 
     for track_id in songs_df['track_id']:
-        
+
         # Obtener canvas
-        url = 'http://localhost:8000/api/canvas/' + track_id
-        response = requests.get(url)
-        response = response.json()
-        
+        print("aca esta el error?")
+        # Realizar llamada interna a la API
+        response = requests.get(f'http://localhost:8000/api/canvas/{track_id}').json()
+        print(response)
+
         # Agregar nombre de la cancion
         song_name = songs_df[songs_df['track_id'] == track_id]['song_name'].values[0]
         response['song_name'] = song_name
-        
+
         # Agregar a array
         canvas.append(response)
-        
+
         # Crear dataframe con canvas
 
     canvas_df = pd.DataFrame(canvas)
@@ -69,17 +73,12 @@ def credenciales():
     # Remover canvas_url duplicados
 
     canvas_df = canvas_df.drop_duplicates(subset=['canvas_url'])
-    
+
     # Remover columna success y message
-    
+
     canvas_df = canvas_df.drop(['success', 'message'], axis=1)
-    
+
     # Guardar dataframe en csv
 
     canvas_df.to_csv('canvas.csv', index=False)
-    canvas_df.to_html('./templates/canvas.html', index=False)
-    
-    # Regresar la lista de url y nombres en la respuesta de la API
-    
-    return canvas_df.to_dict('records')
-    
+    canvas_df.to_html('./templates/canvas.html', index=False)  
