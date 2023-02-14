@@ -3,13 +3,13 @@ import random
 from constants import *
 from protos.canvas_pb2 import EntityCanvazRequest, EntityCanvazResponse
 
-def get_access_token():
+def get_access_token():  # sourcery skip: raise-specific-error
     try:
         response = requests.get(TOKEN_ENDPOINT)
         data = response.json()
         return data["accessToken"]
     except Exception as e:
-        raise Exception(e)
+        raise Exception(e) from e
 
 
 def get_canvas_for_track(access_token, track_id):
@@ -22,7 +22,7 @@ def get_canvas_for_track(access_token, track_id):
             API_HOST + CANVAS_ROUTE,
             headers={
                 "Content-Type": "application/x-protobuf",
-                "Authorization": "Bearer %s" % access_token
+                "Authorization": f"Bearer {access_token}",
             },
             data=canvas_request.SerializeToString(),
         )

@@ -42,18 +42,17 @@ def credenciales():
         )
     # Convertir a dataframe
     songs_df = pd.DataFrame(songs, columns=['song_name', 'album_name', 'url', 'track_id'])
+    
 
     # Obtener canvas de cada cancion desde http://localhost:8000/api/canvas/{track_id}. Agregar el nombre de la cancion a la respuesta desde songs_df y agregar a un array
 
     canvas = []
 
     for track_id in songs_df['track_id']:
-
-        # Obtener canvas
-        print("aca esta el error?")
         # Realizar llamada interna a la API
         response = requests.get(f'http://localhost:8000/api/canvas/{track_id}').json()
         print(response)
+
 
         # Agregar nombre de la cancion
         song_name = songs_df[songs_df['track_id'] == track_id]['song_name'].values[0]

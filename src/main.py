@@ -16,7 +16,7 @@ templates = Jinja2Templates(directory="templates")
 ORIGIN = os.getenv('HOST_ORIGIN')
 origins = [
     ORIGIN,
-    "http://localhost:3000",
+    "https://7nhwvw.deta.dev/",
 ]
 
 app.add_middleware(
@@ -58,11 +58,21 @@ async def refresh_token():
             print(f'ERROR:   Failed to get a new access token: {e}')
 
         await asyncio.sleep(TOKEN_RENEW_TIME)
+        
+# Check with a method the token
+@app.get('/api/token')
+def get_token():
+    # Get new token when executing this method
+    refresh_token()
+    # Show obtained token
+    return {'token': access_token}
 
 @app.on_event("startup")
-async def startup_event():
+async def startup_event(): 
     asyncio.get_event_loop().create_task(refresh_token())
-    
+
+
+
 # Monstrar el index.html
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):

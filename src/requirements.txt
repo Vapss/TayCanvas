@@ -1,0 +1,10 @@
+requests
+python-dotenv
+protobuf
+fastapi
+uvicorn
+spotipy
+pandas
+numpy
+jinja2
+starlette

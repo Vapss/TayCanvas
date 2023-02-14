@@ -130,3 +130,8 @@ dmypy.json
 
 # librespot cerd cache
 credentials.json
+.space
+src/Spacefile
+src/package.json
+src/.deta/state
+src/.deta/prog_info
