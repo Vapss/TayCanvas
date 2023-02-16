@@ -44,7 +44,7 @@
 					var songName = fields[2].trim();
 
 					var div = $('<div><p>' + songName + '</p><p>' + albumName + '</p></div>'); // added albumName
-					var video = $('<video autoplay loop muted controls><source src="' + canvasUrl + '" type="video/mp4"></video>');
+					var video = $('<video width="480" height="270" muted controls><source src="' + canvasUrl + '" type="video/mp4"></video>');
 
 					gallery.append(div);
 					gallery.append(video);
