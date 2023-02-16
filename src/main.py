@@ -12,6 +12,7 @@ from constants import TOKEN_RENEW_TIME
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 ORIGIN = os.getenv('HOST_ORIGIN')
 origins = [
@@ -42,6 +43,8 @@ def get_track_canvas(track_id):
 @app.get('/api/taylorSwift')
 def get_taylor_swift():
     canvTay.credenciales()
+    
+    
 
 @app.get('/api/health')
 def health():
