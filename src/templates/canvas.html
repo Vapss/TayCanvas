@@ -1,57 +1,66 @@
-<!doctype html>
-<html lang="en" class="no-js">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://html5-templates.com/demo/infinite-scroll-image-gallery/" />
-    <title>Taylor Swift Spotify Canvas</title>
-    <meta name="description" content="Taylor Swift Spotify Canvas">
-    <link rel="stylesheet" href="../static/style.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="../static/script.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taylor Swift Spotify Canvas</title>
+  <meta name="description" content="Taylor Swift Spotify Canvas">
+
+  <!-- Add styles -->
+  <link rel="stylesheet" href="../static/style.css">
+
+  <!-- Load jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+  <!-- Load custom script -->
+  <script src="../static/script.js"></script>
 </head>
+
 <body>
-	<p>&nbsp;</p>
-	<h1>Taylor Swift Spotify Canvas</h1>
-	<p style="padding: 10px 20px; text-align: center;">Keep scrolling down to see the canvas loading.</p>
+  <header>
+    <h1>Taylor Swift Spotify Canvas (Beta)</h1>
+    <p>Keep scrolling down to see the canvas.</p>
+  </header>
 
-<div id="gallery"></div>
+  <main>
+    <div id="gallery"></div>
 
-<div id="loading">
-	<img src="../static/_loading.gif" alt="loading" />
-</div>
 
-<div class="wrap-infinite-link">
-	<a class="infinite-link">
-		M&eacute;g t&ouml;bb k&eacute;p
-	</a>
-</div>
-<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+    <div class="wrap-infinite-link">
+      <a href="#" class="infinite-link">Load more images</a>
+    </div>
 
-<script>
-	$(document).ready(function() {
-		var csvFile = '../static/canvas.csv'; // Replace with your CSV file name
-		var gallery = $('#gallery');
+    <a href="#" id="back2Top" title="Back to top">&#10148;</a>
+  </main>
 
-		$.get(csvFile, function(data) {
-			var lines = data.split('\n');
-			for (var i = 0; i < lines.length; i++) {
-				var fields = lines[i].split(',');
-				if (fields.length == 3) { // fixed length check to 3
-					var canvasUrl = fields[0].trim(); // renamed to canvasUrl
-					var albumName = fields[1].trim();
-					var songName = fields[2].trim();
+  <footer>
+    <p>Development by:</p><p><a href="https://github.com/Vapss">Vapss</a></p>
+  </footer>
 
-					var div = $('<div><p>' + songName + '</p><p>' + albumName + '</p></div>'); // added albumName
-					var video = $('<video width="320" height="480" muted controls><source src="' + canvasUrl + '" type="video/mp4"></video>');
+  <script>
+    $(document).ready(function() {
+      var csvFile = "../static/canvas.csv";
+      var gallery = $("#gallery");
 
-					gallery.append(div);
-					gallery.append(video);
-				}
-			}
-		});
-	});
-</script>
+      $.get(csvFile, function(data) {
+        var lines = data.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+          var fields = lines[i+1].split(",");
+          if (fields.length === 3) {
+            var canvasUrl = fields[0].trim();
+            var albumName = fields[1].trim();
+            var songName = fields[2].trim();
+
+            var div = $("<div><p>" + songName + "</p><p>" + albumName + "</p></div>");
+            var video = $('<video width="320" height="480" muted controls><source src="' + canvasUrl + '" type="video/mp4"></video>');
+
+            gallery.append(div);
+            gallery.append(video);
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
