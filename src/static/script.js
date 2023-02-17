@@ -44,7 +44,7 @@ function loadImage(count) {
           var albumName = fields[1].trim();
           var videoUrl = fields[0].trim();
           var div = $('<div><p>' + songName + '</p><p>' + albumName + '</p></div>');
-          var video = $('<video width="480" height="270" autoplay loop muted><source src="' + videoUrl + '" type="video/mp4"></video>');
+          var video = $('<video width="320" height="480" autoplay loop muted><source src="' + videoUrl + '" type="video/mp4"></video>');
           gallery.append(div);
           gallery.append(video);
         }
