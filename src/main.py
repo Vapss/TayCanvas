@@ -81,3 +81,9 @@ async def startup_event():
 async def read_item(request: Request):
     return templates.TemplateResponse("canvas.html", {"request": request})
 
+# Mostrar oldCanvas.html
+@app.get("/oldCanvas", response_class=HTMLResponse)
+async def read_item(request: Request):
+    return templates.TemplateResponse("oldCanvas.html", {"request": request})
+
+

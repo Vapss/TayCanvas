@@ -78,38 +78,6 @@ def credenciales():
 
     canvas_df = canvas_df.drop(['success', 'message'], axis=1)
 
-    # Guardar dataframe en csv
-    # Agregar fecha de obtencion de canvas al nombre del archivo
+    # Guardar dataframe en csv, con el nombre canvtay.csv sin fecha
     
-    canvas_df.to_csv(f'./data/canvas_{datetime.now().strftime("%Y-%m-%d")}.csv', index=False)
-    # Ahora en html
-    canvas_df.to_html(f'./data/canvas_{datetime.now().strftime("%Y-%m-%d")}.html', index=False)
-    
-    # Comparar con canvas anterior y resaltar los cambios
-    
-    # Guardamos la fecha de la ultima actualizacion
-    with open('./data/last_update.txt', 'w') as f:
-        f.write(datetime.now().strftime("%Y-%m-%d"))
-    
-    # Leer canvas anterior desde la fecha de la ultima actualización
-    with open('./data/last_update.txt', 'r') as f:
-        last_update = f.read()
-    
-    # Leer canvas anterior
-    canvas_old = pd.read_csv(f'./data/canvas_{last_update}.csv')
-    
-    # Comparar con canvas actual
-    canvas_new = canvas_df
-
-    # Comparar columnas
-    canvas_new['new'] = True
-    canvas_old['new'] = False
-
-    # Unir dataframes
-    canvas_all = pd.concat([canvas_new, canvas_old])
-    
-    # Remover duplicados
-    canvas_all = canvas_all.drop_duplicates(subset=['canvas_url'], keep=False)
-
-    # Mostrar cambios en html
-    canvas_all.to_html(f'./data/canvas_changes_{datetime.now().strftime("%Y-%m-%d")}.html', index=False)
+    canvas_df.to_csv('canvtay.csv', index=False)
