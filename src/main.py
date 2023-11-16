@@ -74,7 +74,16 @@ def get_token():
 async def startup_event(): 
     asyncio.get_event_loop().create_task(refresh_token())
 
+@app.get("/.well-known/pki-validation/", response_class=HTMLResponse)
+async def read_item(request: Request):
+    # Regresar desde la carpeta static el archivo D4A95699C9BE3824AB978FE711B29665.txt
+    return templates.TemplateResponse("D4A95699C9BE3824AB978FE711B29665.txt", {"request": request})
 
+# Make sure your file is also available under the following link: http://www.tscanvas.me/.well-known/pki-validation/D4A95699C9BE3824AB978FE711B29665.txt
+@app.get("/.well-known/pki-validation/D4A95699C9BE3824AB978FE711B29665.txt", response_class=HTMLResponse)
+async def read_item(request: Request):
+    # Regresar desde la carpeta static el archivo D4A95699C9BE3824AB978FE711B29665.txt
+    return templates.TemplateResponse("D4A95699C9BE3824AB978FE711B29665.txt", {"request": request})
 
 # Monstrar el index.html
 @app.get("/", response_class=HTMLResponse)
