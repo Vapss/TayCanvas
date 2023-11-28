@@ -84,6 +84,10 @@ async def read_item(request: Request):
 async def read_item(request: Request):
     return templates.TemplateResponse("oldCanvas.html", {"request": request})
 
+@app.get("/DecemberCanvas", response_class=HTMLResponse)
+async def read_item(request: Request):
+    return templates.TemplateResponse("DecemberCanvas.html", {"request": request})
+
 @app.get("/archive", response_class=HTMLResponse)
 async def read_item(request: Request):
     return templates.TemplateResponse("archive.html", {"request": request})

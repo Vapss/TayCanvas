@@ -1,0 +1,154 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	}
+	
+	/* Set the base font and line-height for the whole document */
+	body {
+	font-family: "Helvetica Neue", "Segoe UI", Segoe, Helvetica, Arial, "Lucida Grande", sans-serif;
+	line-height: 1.5;
+	color: #333;
+	background-color: #F6F6F6;
+	}
+	
+	/* Set a max-width for the page and center it horizontally */
+	.container {
+	max-width: 1170px;
+	margin: 0 auto;
+	padding: 0 15px;
+	}
+	
+	/* Define the grid system for layout */
+	.row:before, .row:after {
+	display: table;
+	content: "";
+	clear: both;
+	}
+	.col-md-6 {
+	width: 50%;
+	float: left;
+	}
+	.col-md-push-3 {
+	margin-left: 25%;
+	}
+	
+	/* Header styles */
+	header {
+	text-align: center;
+	padding: 50px 0;
+	}
+	h1 {
+	font-size: 48px;
+	font-weight: 300;
+	margin-bottom: 20px;
+	/* center */
+	display: block;
+	text-align: center;
+
+	}
+	p {
+	font-size: 18px;
+	font-weight: 300;
+	/* center */
+	display: block;
+	text-align: center;
+	}
+	.lead {
+	font-size: 24px;
+	font-weight: 300;
+	margin-bottom: 40px;
+	}
+	hr {
+	border: none;
+	border-top: 1px solid #ccc;
+	margin: 50px 0;
+	}
+	
+	/* Gallery styles */
+	#gallery {
+	text-align: center;
+	margin: 50px 0;
+	}
+	#gallery img {
+	max-width: 100%;
+	margin: 20px 0;
+	}
+	#gallery div {
+	background-color: #BBC;
+	color: #FFF;
+	font-weight: bold;
+	padding: 10px 20px;
+	margin-bottom: 20px;
+	}
+	
+	/* Back-to-top button styles */
+	#back2Top {
+	display: none;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #BBC;
+	color: #FFF;
+	font-size: 20px;
+	text-align: center;
+	border-radius: 50%;
+	z-index: 999;
+	cursor: pointer;
+	transition: opacity 0.2s ease-in-out;
+	}
+	#back2Top:hover {
+	opacity: 0.7;
+	}
+	
+	/* Responsive styles */
+	@media screen and (max-width: 767px) {
+	.container {
+	padding: 0 10px;
+	}
+	h1 {
+	font-size: 36px;
+	}
+	.lead {
+	font-size: 18px;
+	}
+	#gallery img {
+	margin: 10px 0;
+	}
+	}
+	footer {
+		background-color: #333;
+		color: #fff;
+		padding: 20px;
+	  }
+	  
+	  footer a {
+		color: #fff;
+		text-decoration: none;
+	  }
+	  
+	  footer a:hover {
+		text-decoration: underline;
+	  }
+	  
+	  footer p {
+		margin: 0;
+		font-size: 14px;
+	  }
+	  
+	  footer .footer-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	  }
+	  
+	  footer .footer-links a {
+		margin-right: 20px;
+	  }
+	  
