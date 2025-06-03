@@ -1,4 +1,4 @@
-var csvFile = "../static/canvastaynew.csv";
+var csvFile = "../static/canvtaynew.csv";
 var counter = 0;
 var loadingInProgress = false;
 var gallery = $('#gallery');
