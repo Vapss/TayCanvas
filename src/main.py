@@ -74,7 +74,7 @@ def get_token():
 async def startup_event(): 
     asyncio.get_event_loop().create_task(refresh_token())
 
-# Monstrar el index.html
+# Mostrar el index.html
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):
     return templates.TemplateResponse("canvas.html", {"request": request})
