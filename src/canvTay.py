@@ -78,6 +78,6 @@ def credenciales():
 
     canvas_df = canvas_df.drop(['success', 'message'], axis=1)
 
-    # Guardar dataframe en csv, con el nombre canvtay.csv sin fecha
+    # Guardar dataframe en csv, con el nombre canvtaynew.csv sin fecha
     
     canvas_df.to_csv('canvtaynew.csv', index=False)
