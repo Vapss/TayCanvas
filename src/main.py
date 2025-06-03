@@ -5,8 +5,10 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import os
 import asyncio
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from . import canvas
 from . import canvTay
+from . import database
 from .constants import TOKEN_RENEW_TIME
 
 app = FastAPI()
@@ -72,8 +74,12 @@ def get_token():
     return {'token': access_token}
 
 @app.on_event("startup")
-async def startup_event(): 
+async def startup_event():
     asyncio.get_event_loop().create_task(refresh_token())
+    database.init_db()
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(canvTay.credenciales, 'cron', hour=8, minute=0)
+    scheduler.start()
 
 # Mostrar el index.html
 @app.get("/", response_class=HTMLResponse)

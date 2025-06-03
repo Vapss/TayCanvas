@@ -7,3 +7,4 @@ spotipy
 pandas
 numpy
 jinja2
+apscheduler
