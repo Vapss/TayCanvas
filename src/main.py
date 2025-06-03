@@ -5,14 +5,15 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import os
 import asyncio
-import canvas
-import canvTay
-from constants import TOKEN_RENEW_TIME
+from . import canvas
+from . import canvTay
+from .constants import TOKEN_RENEW_TIME
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory="templates")
-app.mount("/static", StaticFiles(directory="static"), name="static")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
 ORIGIN = os.getenv('HOST_ORIGIN')
 origins = [

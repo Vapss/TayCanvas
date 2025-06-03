@@ -1,7 +1,7 @@
 import requests
 import random
-from constants import *
-from protos.canvas_pb2 import EntityCanvazRequest, EntityCanvazResponse
+from .constants import TOKEN_ENDPOINT, TRACK_URI_PREFIX, API_HOST, CANVAS_ROUTE
+from .protos.canvas_pb2 import EntityCanvazRequest, EntityCanvazResponse
 
 def get_access_token():  # sourcery skip: raise-specific-error
     try:
