@@ -9,6 +9,7 @@ from . import canvas
 from . import canvTay
 from .constants import TOKEN_RENEW_TIME
 
+
 app = FastAPI()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -57,11 +58,12 @@ async def refresh_token():
         print('INFO:     Getting a fresh Spotify access token')
 
         try:
-            access_token = canvas.get_access_token()
+            access_token, expires_in = canvas.get_access_token()
         except Exception as e:
             print(f'ERROR:   Failed to get a new access token: {e}')
+            expires_in = TOKEN_RENEW_TIME
 
-        await asyncio.sleep(TOKEN_RENEW_TIME)
+        await asyncio.sleep(expires_in)
         
 # Check with a method the token
 @app.get('/api/token')

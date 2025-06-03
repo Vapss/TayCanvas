@@ -1,13 +1,31 @@
+import base64
+import os
 import requests
 import random
 from .constants import TOKEN_ENDPOINT, TRACK_URI_PREFIX, API_HOST, CANVAS_ROUTE
 from .protos.canvas_pb2 import EntityCanvazRequest, EntityCanvazResponse
 
 def get_access_token():  # sourcery skip: raise-specific-error
+    """Retrieve a Spotify access token using the Client Credentials flow."""
+
+    client_id = os.getenv("SPOTIPY_CLIENT_ID")
+    client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
+
+    if not client_id or not client_secret:
+        raise EnvironmentError("Missing Spotify client credentials")
+
+    credentials = f"{client_id}:{client_secret}".encode()
+    encoded_credentials = base64.b64encode(credentials).decode()
+
     try:
-        response = requests.get(TOKEN_ENDPOINT)
+        response = requests.post(
+            TOKEN_ENDPOINT,
+            headers={"Authorization": f"Basic {encoded_credentials}"},
+            data={"grant_type": "client_credentials"},
+        )
+        response.raise_for_status()
         data = response.json()
-        return data["accessToken"]
+        return data["access_token"], data["expires_in"]
     except Exception as e:
         raise Exception(e) from e
 
