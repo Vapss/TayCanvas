@@ -65,11 +65,12 @@ async def refresh_token():
         
 # Check with a method the token
 @app.get('/api/token')
-def get_token():
-    # Get new token when executing this method
-    refresh_token()
-    # Show obtained token
-    return {'token': access_token}
+async def get_token():
+    """Fetch a fresh Spotify token and return it."""
+    global access_token
+    # Refresh token for this request
+    access_token = await asyncio.to_thread(canvas.get_access_token)
+    return {"token": access_token}
 
 @app.on_event("startup")
 async def startup_event(): 
