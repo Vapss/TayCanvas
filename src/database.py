@@ -14,7 +14,8 @@ def init_db():
             song_name TEXT,
             album_name TEXT,
             canvas_url TEXT,
-            retrieved_at TEXT
+            retrieved_at TEXT,
+            UNIQUE(track_id, canvas_url) ON CONFLICT IGNORE
         )
         """
     )
