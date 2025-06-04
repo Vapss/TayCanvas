@@ -17,6 +17,36 @@ def test_get_access_token(monkeypatch):
     token = canvas.get_access_token()
     assert token == "abc123"
 
+def test_get_access_token_requests_exception(monkeypatch):
+    def raise_exc(url):
+        raise requests.exceptions.RequestException("Network error")
+    monkeypatch.setattr(requests, "get", raise_exc)
+    token = canvas.get_access_token()
+    assert token is None
+
+def test_get_access_token_no_json(monkeypatch):
+    class Resp:
+        pass
+    monkeypatch.setattr(requests, "get", lambda url: Resp())
+    token = canvas.get_access_token()
+    assert token is None
+
+def test_get_access_token_invalid_json(monkeypatch):
+    class Resp:
+        def json(self):
+            raise ValueError("Invalid JSON")
+    monkeypatch.setattr(requests, "get", lambda url: Resp())
+    token = canvas.get_access_token()
+    assert token is None
+
+def test_get_access_token_missing_key(monkeypatch):
+    class Resp:
+        def json(self):
+            return {"notAccessToken": "nope"}
+    monkeypatch.setattr(requests, "get", lambda url: Resp())
+    token = canvas.get_access_token()
+    assert token is None
+
 
 def test_get_canvas_for_track(monkeypatch):
     response = EntityCanvazResponse()
