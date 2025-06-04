@@ -7,3 +7,5 @@ spotipy
 pandas
 numpy
 jinja2
+
+pytest
