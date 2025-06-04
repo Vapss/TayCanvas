@@ -31,5 +31,7 @@ def credenciales():
                     song_name=song_name,
                     album_name=album_name,
                     canvas_url=canvas_url,
-                    retrieved_at=datetime.datetime.utcnow().isoformat()
+                    retrieved_at=datetime.datetime.now(
+                        datetime.timezone.utc
+                    ).isoformat(),
                 )
