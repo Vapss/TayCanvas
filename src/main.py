@@ -77,8 +77,17 @@ def get_token():
 async def startup_event():
     asyncio.get_event_loop().create_task(refresh_token())
     database.init_db()
+    import logging
+
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(canvTay.credenciales, 'cron', hour=8, minute=0)
+
+    def safe_credenciales_job():
+        try:
+            canvTay.credenciales()
+        except Exception as e:
+            logging.exception("Exception occurred in scheduled canvTay.credenciales job")
+
+    scheduler.add_job(safe_credenciales_job, 'cron', hour=8, minute=0)
     scheduler.start()
 
 # Mostrar el index.html
