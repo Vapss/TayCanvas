@@ -4,14 +4,22 @@
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from .config import (
+    SPOTIPY_CLIENT_ID,
+    SPOTIPY_CLIENT_SECRET,
+    SPOTIPY_REDIRECT_URL,
+)
 import pandas as pd
 import json
 import requests
 import datetime
 
 def credenciales():
-    from spotipy.oauth2 import SpotifyClientCredentials
-    spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+    credentials = SpotifyClientCredentials(
+        client_id=SPOTIPY_CLIENT_ID,
+        client_secret=SPOTIPY_CLIENT_SECRET,
+    )
+    spotify = spotipy.Spotify(client_credentials_manager=credentials)
 
     artist_uri = 'spotify:artist:06HL4z0CvFAxyc27GXpf02'
     artist = spotify.artist(artist_uri)
