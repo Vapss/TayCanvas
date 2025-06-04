@@ -3,9 +3,9 @@ import sys
 import requests
 import random
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
-import canvas
+
+from src import canvas
 from protos.canvas_pb2 import EntityCanvazResponse
 
 
