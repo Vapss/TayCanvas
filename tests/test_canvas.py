@@ -64,7 +64,7 @@ def test_get_canvas_for_track(monkeypatch):
         return Resp(serialized)
 
     monkeypatch.setattr(requests, "post", fake_post)
-    monkeypatch.setattr(random, "choice", lambda seq: seq[1])
+    monkeypatch.setattr(random, "choice", lambda seq: seq[1] if len(seq) > 1 else ValueError("Sequence must contain at least two elements"))
 
     url = canvas.get_canvas_for_track("token", "trackid")
     assert url == "http://c2"
