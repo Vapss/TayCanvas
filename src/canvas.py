@@ -1,6 +1,7 @@
-import requests
+import logging
 import random
-from .constants import TOKEN_ENDPOINT, TRACK_URI_PREFIX, API_HOST, CANVAS_ROUTE
+import requests
+from .constants import API_HOST, CANVAS_ROUTE, TOKEN_ENDPOINT, TRACK_URI_PREFIX
 from .protos.canvas_pb2 import EntityCanvazRequest, EntityCanvazResponse
 
 def get_access_token():  # sourcery skip: raise-specific-error
@@ -8,8 +9,9 @@ def get_access_token():  # sourcery skip: raise-specific-error
         response = requests.get(TOKEN_ENDPOINT)
         data = response.json()
         return data["accessToken"]
-    except Exception as e:
-        raise Exception(e) from e
+    except (requests.RequestException, ValueError, KeyError, AttributeError) as err:
+        logging.error("Failed to obtain access token: %s", err)
+        return None
 
 
 def get_canvas_for_track(access_token, track_id):
