@@ -9,7 +9,7 @@ def get_access_token():  # sourcery skip: raise-specific-error
         response = requests.get(TOKEN_ENDPOINT)
         data = response.json()
         return data["accessToken"]
-    except (requests.RequestException, ValueError, KeyError, AttributeError) as err:
+    except (requests.RequestException, ValueError, KeyError) as err:
         logging.error("Failed to obtain access token: %s", err)
         return None
 
