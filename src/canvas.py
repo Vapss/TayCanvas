@@ -11,7 +11,7 @@ def get_access_token():  # sourcery skip: raise-specific-error
         return data["accessToken"]
     except (requests.RequestException, ValueError, KeyError) as err:
         logging.error("Failed to obtain access token: %s", err)
-        return None
+        raise RuntimeError("Failed to obtain access token") from err
 
 
 def get_canvas_for_track(access_token, track_id):
