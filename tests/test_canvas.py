@@ -5,6 +5,8 @@ import random
 
 
 
+import pytest
+
 from src import canvas
 from protos.canvas_pb2 import EntityCanvazResponse
 
@@ -21,31 +23,31 @@ def test_get_access_token_requests_exception(monkeypatch):
     def raise_exc(url):
         raise requests.exceptions.RequestException("Network error")
     monkeypatch.setattr(requests, "get", raise_exc)
-    token = canvas.get_access_token()
-    assert token is None
+    with pytest.raises(Exception):
+        canvas.get_access_token()
 
 def test_get_access_token_no_json(monkeypatch):
     class Resp:
         pass
     monkeypatch.setattr(requests, "get", lambda url: Resp())
-    token = canvas.get_access_token()
-    assert token is None
+    with pytest.raises(Exception):
+        canvas.get_access_token()
 
 def test_get_access_token_invalid_json(monkeypatch):
     class Resp:
         def json(self):
             raise ValueError("Invalid JSON")
     monkeypatch.setattr(requests, "get", lambda url: Resp())
-    token = canvas.get_access_token()
-    assert token is None
+    with pytest.raises(Exception):
+        canvas.get_access_token()
 
 def test_get_access_token_missing_key(monkeypatch):
     class Resp:
         def json(self):
             return {"notAccessToken": "nope"}
     monkeypatch.setattr(requests, "get", lambda url: Resp())
-    token = canvas.get_access_token()
-    assert token is None
+    with pytest.raises(Exception):
+        canvas.get_access_token()
 
 
 def test_get_canvas_for_track(monkeypatch):
@@ -68,3 +70,27 @@ def test_get_canvas_for_track(monkeypatch):
 
     url = canvas.get_canvas_for_track("token", "trackid")
     assert url == "http://c2"
+
+
+def test_get_canvas_for_track_request_failure(monkeypatch):
+    def raise_post(*args, **kwargs):
+        raise requests.exceptions.RequestException("boom")
+
+    monkeypatch.setattr(requests, "post", raise_post)
+
+    with pytest.raises(ConnectionError):
+        canvas.get_canvas_for_track("token", "trackid")
+
+
+def test_get_canvas_for_track_no_canvases(monkeypatch):
+    response = EntityCanvazResponse()
+    serialized = response.SerializeToString()
+
+    class Resp:
+        def __init__(self, content):
+            self.content = content
+
+    monkeypatch.setattr(requests, "post", lambda *a, **k: Resp(serialized))
+
+    with pytest.raises(AttributeError):
+        canvas.get_canvas_for_track("token", "trackid")
